@@ -1,0 +1,91 @@
+
+// unbalanced BST
+class TreeNode {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+function insertNode(root, value) {
+    if (root === null) {
+        return new TreeNode(value);
+    }
+
+    if (value < root.value) {
+        root.left = insertNode(root.left, value);
+    } else if (value > root.value) {
+        root.right = insertNode(root.right, value);
+    }
+
+    return root;
+}
+
+function createBSTFromArray(array) {
+    let root = null;
+
+    for (let i = 0; i < array.length; i++) {
+        root = insertNode(root, array[i]);
+    }
+
+    return root;
+}
+
+// Example usage:
+const array = [10, 9, 8, 7, 5, 4, 3, 2, 1];
+const root = createBSTFromArray(array);
+console.log(root);
+
+///////////////////////////////////////////////////////////
+// Convert the unbalanced BST to balanced BST :
+
+//step-1- find the inorder traversal - LDR
+var target = [];
+
+function dfs(node) {
+    if (!node) {
+        return;
+    }
+
+    dfs(node.left);
+    target.push(node.value);
+    dfs(node.right);
+}
+dfs(root);
+console.log(target);
+
+// step-2 : use the inorder traversal to make balanced binary tree-
+let inorder = target;
+let start = 0;
+let end = inorder.length;
+function solve(start, end) {
+    if (start > end) return null;
+    let mid = parseInt((start + end) / 2);
+    let root = new TreeNode(inorder[mid])
+    root.left = solve(start, mid - 1);
+    root.right = solve(mid + 1, end);
+    return root;
+}
+let bal = solve(start, end);
+console.log(bal)
+
+
+////////////////////////////////////////////////////////////////////////////
+// scaler code - 
+function sortedArrayToBST(nums) {
+    return buildBST(nums, 0, nums.length - 1);
+    function buildBST(nums, low, high) {
+        if (low < 0 || high > nums.length - 1) {
+            return null;
+        }
+        if (nums.length == 0 || low > high) {
+            return null;
+        }
+        let mid = low + Math.floor((high - low) / 2);
+        let root = new TreeNode(nums[mid]);
+        root.left = buildBST(nums, low, mid - 1);
+        root.right = buildBST(nums, mid + 1, high);
+        return root;
+    }
+}

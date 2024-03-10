@@ -1,0 +1,51 @@
+// Definition for a binary tree node.
+
+class TreeNode {
+    constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+    }
+}
+
+// Function to insert a node into a binary tree.
+function insert(root, val) {
+    if (root === null) {
+        return new TreeNode(val);
+    }
+    let cur = root;
+    while (true) {
+        if (cur.val <= val) {
+            // you are on right side
+            if (cur.right !== null) {
+                // move to end of right
+                cur = cur.right;
+            } else {
+                // you reached the rightmost leaf
+                cur.right = new TreeNode(val);
+                break;
+            }
+        } else {
+            // you are on left side
+            if (cur.left !== null) {
+                // move to end of left
+                cur = cur.left;
+            } else {
+                //you reached the left_most leaf
+                cur.left = new TreeNode(val);
+                break;
+            }
+        }
+    }
+    return root;
+}
+
+// Example usage
+const root = new TreeNode(4);
+root.left = new TreeNode(2);
+root.right = new TreeNode(7);
+root.left.left = new TreeNode(1);
+root.left.right = new TreeNode(3);
+
+const valToInsert = 15;
+const updatedRoot = insert(root, valToInsert);
+console.log(updatedRoot);

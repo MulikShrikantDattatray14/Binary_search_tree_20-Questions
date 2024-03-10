@@ -1,0 +1,47 @@
+//Problem statement: Given a binary search tree find the kth largest and smallest element in Binary Search Tree.
+
+// Input: N=6
+//        Arr=[5,3,6,2,4,1]
+//        K=3
+
+// Output: Kth largest element is 4
+//         Kth smallest element is 3
+
+//logic= Inorder traversal of BST is always sorted , so find kth from start and end.
+
+class TreeNode {
+    constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+    }
+}
+
+const root = new TreeNode(44);
+root.left = new TreeNode(22);
+root.right = new TreeNode(55);
+root.left.left = new TreeNode(11);
+root.left.right = new TreeNode(33);
+//////////////////////////////////////////////////////////////////////////////////////////
+let ans;
+let idx;
+let k = 2;
+function solve(root, k) {
+    if (!root) return;
+    // go the extreme left 
+    solve(root.left, k);
+    if (k == idx) {
+        ans = root.val;
+        idx++;
+        return;
+    } else idx++;
+    // go to extreme right 
+    solve(root.right, k);
+}
+
+function kthsmallest1(root, k) {
+    idx = 1;
+    ans = -1;
+    solve(root, k);
+    console.log(ans);
+}
+kthsmallest1(root, k);

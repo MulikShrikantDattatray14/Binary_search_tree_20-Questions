@@ -1,0 +1,85 @@
+class TreeNode {
+    constructor(data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+function predecessorSuccessor(root, key) {
+    let predecessor = -1;
+    let successor = -1;
+    //////////////////////////////////////////////////////////////////////////////
+    // function findFloor(root, input) {
+    //     let floor = -1;
+    //     while (root) {
+    //         if (root.data === input)
+    //             return input;
+    //         else if (root.data < input) {
+    //             floor = root.data;
+    //             root = root.right;
+    //         } else {
+    //             root = root.left;
+    //         }
+    //     }
+    //     return floor;
+    // }
+
+    // Initializing temporary node with head.
+    let temp = root;
+
+    // Traversing in tree.
+    while (temp !== null) {
+        if (key > temp.data) {
+            // Updating predecessor.
+            predecessor = temp.data;
+            temp = temp.right;
+        } else {
+            temp = temp.left;
+        }
+    }
+
+    temp = root;
+    ///////////////////////////////////////////////////////////////////////////
+    // function findCeil(root, input) {
+    //     let ceil = -1;
+
+    //     while (root !== null) {
+    //         if (root.data === input) {
+    //             return input;  // If input is found in the tree, return it as ceil.
+    //         } else if (root.data < input) {
+    //             root = root.right;  // Move to the right subtree if input is greater than current node's data.
+    //         } else {
+    //             ceil = root.data;   // Mark ceil to be current node's data.
+    //             root = root.left;   // Move to the left subtree to find a closer ceil value.
+    //         }
+    //     }
+
+    //     return ceil;  // Return computed ceil value.
+    // }
+    // Traversing in tree.
+    while (temp !== null) {
+        if (key >= temp.data) {
+            temp = temp.right;
+        } else {
+            // Updating successor.
+            successor = temp.data;
+            temp = temp.left;
+        }
+    }
+
+    let sol = [predecessor, successor];
+    return sol;
+}
+// Example usage:
+// Constructing a sample BST
+const root = new TreeNode(10);
+root.left = new TreeNode(5);
+root.right = new TreeNode(15);
+root.left.left = new TreeNode(3);
+root.left.right = new TreeNode(7);
+root.right.left = new TreeNode(12);
+root.right.right = new TreeNode(18);
+
+const key = 4;
+const result = predecessorSuccessor(root, key);
+console.log(result); // Output: [5, 10]

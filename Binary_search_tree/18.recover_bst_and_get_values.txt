@@ -1,0 +1,120 @@
+
+// brute force - using inorder get the sorted values and using those sorted arr and the original input , traversal again and modify the tree , t.c = 2N + NlogN and space complexity - N
+// optimisied approach -
+
+class TreeNode {
+    constructor(val) {
+        this.val = val;
+        this.left = this.right = null;
+    }
+}
+
+let first, prev, middle, last;
+
+function recoverTree(root) {
+    first = middle = last = null;
+    prev = new TreeNode(Number.MIN_SAFE_INTEGER);
+    inorder(root);
+    if (first !== null && last !== null) {
+        let temp = first.val;
+        first.val = last.val;
+        last.val = temp;
+    } else if (first !== null && middle !== null) {
+        let temp = first.val;
+        first.val = middle.val;
+        middle.val = temp;
+    }
+}
+
+function inorder(root) {
+    if (root == null) return;
+    inorder(root.left);
+    if (root.val < prev.val) {
+        // If this is the first violation, mark these two nodes as "first" and "middle"
+        if (first == null) {
+            first = prev;
+            middle = root;
+        }
+        // If this is the second violation, mark this node as "last"
+        else last = root;
+    }
+    // Mark this node as the previous
+    // take prev ahead
+    prev = root;
+    inorder(root.right);
+}
+
+// Example usage:
+const root = new TreeNode(3);
+root.left = new TreeNode(1);
+root.right = new TreeNode(4);
+root.right.left = new TreeNode(2);
+console.log(root);
+recoverTree(root);
+console.log(root);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////code returning 2 values :///////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////////
+
+
+// brute force - using inorder get the sorted values and using those sorted arr and the original input , traversal again and modify the tree , t.c = 2N + NlogN and space complexity - N
+// optimisied approach -
+
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = this.right = null;
+  }
+}
+
+let first, prev, middle, last;
+
+function recoverTree(root) {
+  first = middle = last = null;
+  prev = new TreeNode(Number.MIN_SAFE_INTEGER); // address of prev is null
+  inorder(root);
+  if (first !== null && last !== null) {
+    // swapped nodes are not adjacent
+    let temp = first.val;
+    first.val = last.val;
+    last.val = temp;
+    console.log("Two incorrectly swapped values are : ");
+    console.log([first.val, last.val]);
+  } else if (first !== null && middle !== null) {
+    // swapped nodes are  adjacent
+    let temp = first.val;
+    first.val = middle.val;
+    middle.val = temp;
+    console.log("Two incorrectly swapped values are : ");
+    console.log([first.val, middle.val]);
+  }
+}
+
+function inorder(root) {
+  if (root == null) return;
+  inorder(root.left);
+  if (prev !== null && root.val < prev.val) {
+    // If this is the first violation, mark these two nodes as "first" and "middle"
+    if (first == null) {
+      first = prev;
+      middle = root;
+    }
+    // If this is the second violation, mark this node as "last"
+    else last = root;
+  }
+  // Mark this node as the previous
+  //for first time previous will be null
+  prev = root;
+  inorder(root.right);
+}
+
+// Example usage:
+const root = new TreeNode(3);
+root.left = new TreeNode(1);
+root.right = new TreeNode(4);
+root.right.left = new TreeNode(2);
+console.log(root);
+recoverTree(root);
+console.log(root);

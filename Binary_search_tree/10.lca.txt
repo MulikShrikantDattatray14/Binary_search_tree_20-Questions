@@ -1,0 +1,90 @@
+class TreeNode {
+    // Value of the node
+    constructor(x) {
+        this.val = x;
+        // Pointer to the left child node
+        this.left = null;
+        // Pointer to the right child node
+        this.right = null;
+    }
+}
+
+// Function to find the lowest common ancestor (LCA)
+// of two nodes in a binary search tree (BST)
+function lowestCommonAncestor(root, p, q) {
+    // Check if the root is null
+    if (root === null) {
+        // If null, return null as there's no LCA
+        return null;
+    }
+
+    // Store the value of the current root node
+    const curr = root.val;
+
+    // If both p and q values are greater
+    // than the current root's value
+    if (curr < p.val && curr < q.val) {
+        // Recursively search in the
+        // right subtree for the LCA
+        return lowestCommonAncestor(root.right, p, q);
+    }
+
+    // If both p and q values are smaller
+    // than the current root's value
+    if (curr > p.val && curr > q.val) {
+        // Recursively search in the
+        // left subtree for the LCA
+        return lowestCommonAncestor(root.left, p, q);
+    }
+
+    // If the values are on either side of the current root's value,
+    // or one of the values matches the current root's value,
+    // return the current root as the LCA
+    return root;
+}
+
+// Function to perform an in-order traversal
+// of a binary tree and print its nodes
+function printInOrder(root) {
+    // Check if the current node
+    // is null (base case for recursion)
+    if (root === null) {
+        // If null, return and
+        // terminate the function
+        return;
+    }
+
+    // Recursively call printInOrder
+    // for the left subtree
+    printInOrder(root.left);
+
+    // Print the value of the current node
+    console.log(root.val + " ");
+
+    // Recursively call printInOrder
+    // for the right subtree
+    printInOrder(root.right);
+}
+
+// Creating a sample tree
+const root = new TreeNode(6);
+root.left = new TreeNode(3);
+root.right = new TreeNode(8);
+root.left.left = new TreeNode(2);
+root.left.right = new TreeNode(4);
+root.right.left = new TreeNode(7);
+
+// Node with value 2
+const p = root.left.left;
+
+// Node with value 4
+const q = root.left.right;
+
+const lca = lowestCommonAncestor(root, p, q);
+
+console.log("Inorder Traversal of Tree:");
+printInOrder(root);
+console.log();
+console.log(
+    "Lowest Common Ancestor of " + p.val + " and " + q.val + " is: " + lca.val
+);

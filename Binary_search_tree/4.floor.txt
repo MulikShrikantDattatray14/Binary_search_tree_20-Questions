@@ -1,0 +1,38 @@
+//Problem Statement: Given a BST and a number X, find the Floor of X.
+// Note: Floor(X) is a number that is either equal to X or is immediately lesser than X.
+
+// If Floor could not be found, return -1.
+
+// Defining the class for Tree implementation
+class newNode {
+  constructor(data) {
+    this.data = data;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+// Function to find floor in BST
+function findFloor(root, input) {
+  let floor = -1;
+  while (root) {
+    if (root.data === input) return input;
+    else if (root.data < input) {
+      floor = root.data;
+      root = root.right;
+    } else {
+      root = root.left;
+    }
+  }
+  return floor;
+}
+
+// Driver Code
+let root = new newNode(10);
+root.left = new newNode(5);
+root.left.left = new newNode(4);
+root.left.right = new newNode(7);
+root.left.right.right = new newNode(8);
+root.right = new newNode(11);
+
+console.log(findFloor(root, 6));

@@ -1,0 +1,45 @@
+class TreeNode {
+    constructor(val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+let k = 1;
+let root = new TreeNode(5);
+root.left = new TreeNode(3);
+root.right = new TreeNode(6);
+root.left.left = new TreeNode(2);
+root.left.right = new TreeNode(4);
+root.right.right = new TreeNode(7);
+
+let answer = kthLargest(root, k);
+console.log(answer);
+
+
+function kthLargest(root, K) {
+    let ans;
+    let idx;
+    return kth(root, 1);
+
+}
+function solve(root, k) {
+    if (!root || idx > k) return;
+    // first  go to the extreme right
+    solve(root.right, k);
+    if (k === idx) {
+        ans = root.val;
+        idx++;
+        return;
+    } else idx++;
+    // then go to extreme left
+    solve(root.left, k);
+}
+function kth(root, fromlast) {
+    idx = 1;
+    ans = -1;
+    solve(root, fromlast);
+    return ans;
+}
+
+//logic -2 :- (n-k)th smallest node - use thee same code as the one used for the smallest node.

@@ -1,0 +1,105 @@
+// logic - take inorder traversal of both the given BST - merege them and then create a new BST
+// try solving - https://leetcode.com/problems/merge-bsts-to-create-single-bst/
+
+class Node {
+    constructor(data, left = null, right = null) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+  
+  function mergeBST(root1, root2) {
+    // Store the in-order traversal of tree1 in an array.
+    const temp1 = [];
+    storeInOrder(root1, temp1);
+  
+    // Store the in-order traversal of tree2 in an array.
+    const temp2 = [];
+    storeInOrder(root2, temp2);
+  
+    // Merge the two sorted arrays.
+    const answer = mergeSortedArrays(temp1, temp2);
+  
+    // Construct the balanced BST from this sorted array.
+    return answer;
+  }
+  
+  // Function to merge two sorted array/lists.
+  function mergeSortedArrays(arr1, arr2) {
+    let i = 0,
+      j = 0;
+    const arr = [];
+  
+    // Traversing in both arrays.
+    while (i < arr1.length && j < arr2.length) {
+      // Comparing array elements.
+      if (arr1[i] < arr2[j]) {
+        arr.push(arr1[i]);
+        i++;
+      } else {
+        arr.push(arr2[j]);
+        j++;
+      }
+    }
+  
+    // Pushing rest elements.
+    while (i < arr1.length) {
+      arr.push(arr1[i]);
+      i++;
+    }
+  
+    // Pushing rest elements.
+    while (j < arr2.length) {
+      arr.push(arr2[j]);
+      j++;
+    }
+  
+    return arr;
+  }
+  
+  // Function to store the inorder traversal of tree in a list.
+  function storeInOrder(root, arr) {
+    if (root !== null) {
+      storeInOrder(root.left, arr);
+      arr.push(root.data);
+      storeInOrder(root.right, arr);
+    }
+  }
+  
+  // Example usage:
+  let root1 = new Node(10);
+  root1.left = new Node(5);
+  root1.left.left = new Node(4);
+  root1.left.right = new Node(7);
+  root1.left.right.right = new Node(8);
+  root1.right = new Node(11);
+  
+  let root2 = new Node(1);
+  root2.left = new Node(2);
+  root2.left.left = new Node(3);
+  root2.left.right = new Node(6);
+  root2.left.right.right = new Node(9);
+  root2.right = new Node(12);
+  
+  const result1 = mergeBST(root1, root2);
+  console.log(result1);
+  //result1= new Set(result1)
+  //////////////////////////////////////////////////////////////////////////
+  //sorted array to balanced BST -
+  
+  // return (buildBST(result1, 0, result1.length - 1));
+  // function buildBST(nums, low, high) {
+  //   if (low < 0 || high > nums.length - 1) {
+  //     return null;
+  //   }
+  //   if (nums.length == 0 || low > high) {
+  //     return null;
+  //   }
+  //   let mid = low + Math.floor((high - low) / 2);
+  //   let root = new Node(nums[mid]);
+  //   root.left = buildBST(nums, low, mid - 1);
+  //   root.right = buildBST(nums, mid + 1, high);
+  //   return root;
+  // }
+  

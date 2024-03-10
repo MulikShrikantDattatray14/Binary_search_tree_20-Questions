@@ -1,0 +1,43 @@
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+//simplified code :
+// let cur=root
+//  while(cur){
+//      if(cur.val==val) return cur
+//      else if(cur.val>val) cur=cur.left
+//      else cur=cur.right
+//  }
+//  return null
+function searchSubtree(root, val) {
+  if (root == null || root.val === val) {
+    return root;
+  }
+
+  return val < root.val
+    ? searchSubtree(root.left, val)
+    : searchSubtree(root.right, val);
+}
+
+let root = new TreeNode(8);
+root.left = new TreeNode(5);
+root.left.left = new TreeNode(4);
+root.left.right = new TreeNode(7);
+root.left.right.left = new TreeNode(6);
+root.right = new TreeNode(12);
+root.right.left = new TreeNode(10);
+root.right.right = new TreeNode(14);
+root.right.right.left = new TreeNode(13);
+
+const valToSearch = 10;
+let foundSubtree = searchSubtree(root, valToSearch);
+
+if (foundSubtree !== null) {
+  console.log("present and thus :", foundSubtree);
+} else {
+  console.log("Not present and thus :", foundSubtree);
+}

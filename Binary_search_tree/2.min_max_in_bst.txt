@@ -1,0 +1,45 @@
+class TreeNode {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+function findMin(root) {
+    // go to the leftmost leaf node
+    if (root === null) {
+        return null; // Empty tree
+    }
+
+    while (root.left !== null) {
+        root = root.left;
+    }
+
+    return root.value;
+}
+
+function findMax(root) {
+    // go to the right most leaf node
+    if (root === null) {
+        return null; // Empty tree
+    }
+
+    while (root.right !== null) {
+        root = root.right;
+    }
+
+    return root.value;
+}
+
+// Example usage:
+const root = new TreeNode(10);
+root.left = new TreeNode(5);
+root.right = new TreeNode(15);
+root.left.left = new TreeNode(3);
+root.left.right = new TreeNode(7);
+root.right.left = new TreeNode(12);
+root.right.right = new TreeNode(18);
+
+console.log("Minimum value:", findMin(root)); // Output: 3
+console.log("Maximum value:", findMax(root)); // Output: 18

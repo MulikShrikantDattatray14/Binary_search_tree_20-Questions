@@ -1,0 +1,72 @@
+
+//use inorder traversal logic :
+//Implement the BSTIterator class that represents an iterator over the in-order traversal of a binary search tree (BST):
+// Javascript Program for above approach
+// Definition for a binary tree node.
+
+function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+  }
+  
+  // Binary Search Tree (BST) Iterator
+  var BSTIterator = function (root) {
+    this.arr = [];
+    const go = (node) => {
+      if (!node) return;
+      go(node.left);
+      this.arr.push(node.val);
+      go(node.right);
+    };
+    go(root);
+    
+  };
+  
+  BSTIterator.prototype.next = function () {
+    return this.arr.shift();
+  };
+  
+  BSTIterator.prototype.hasNext = function () {
+    return this.arr.length > 0;
+  };
+  
+  // Example usage:
+  const root = new TreeNode(7);
+  root.left = new TreeNode(3);
+  root.right = new TreeNode(15);
+  root.right.left = new TreeNode(9);
+  root.right.right = new TreeNode(20);
+  
+  const bstIterator = new BSTIterator(root);
+  
+  // Iterating through the BST using the iterator
+  console.log(bstIterator.hasNext());
+  console.log(bstIterator.next());
+  console.log(bstIterator.hasNext());
+  console.log(bstIterator.next());
+  console.log(bstIterator.hasNext());
+  console.log(bstIterator.next());
+  console.log(bstIterator.hasNext());
+  console.log(bstIterator.next());
+  console.log(bstIterator.hasNext());
+  console.log(bstIterator.next());
+  console.log(bstIterator.hasNext());
+  ////////////////////////////////////////////////////////////
+  
+  // var BSTIterator = function(root) {
+  //     this.arr = [];
+  //     const go = (node) => {
+  //         if (!node) return;
+  //         go(node.left);
+  //         this.arr.push(node.val);
+  //         go(node.right);
+  //     }
+  //     go(root);
+  // };
+  // BSTIterator.prototype.next = function() {
+  // removes the first element
+  //     return this.arr.shift();
+  // };
+  // BSTIterator.prototype.hasNext = function() {
+  //     return this.arr.length > 0;
+  // };/////////////////////////////////////////////////////////

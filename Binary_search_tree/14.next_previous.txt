@@ -1,0 +1,60 @@
+// here we are using reverse of BST
+var BSTIterator = function (root) {
+    this.arr = [];
+    const go = (node) => {
+      if (!node) return;
+      go(node.right);
+      this.arr.push(node.val);
+      go(node.left);
+    };
+    go(root);
+    this.currentIndex = 0; // Initialize the currentIndex for tracking position.
+    console.log(this.arr);
+  };
+  
+  BSTIterator.prototype.next = function () {
+    return this.arr[this.currentIndex++];
+  };
+  
+  BSTIterator.prototype.hasNext = function () {
+    return this.currentIndex < this.arr.length;
+  };
+  
+  BSTIterator.prototype.previous = function () {
+    return this.arr[--this.currentIndex];
+  };
+  
+  BSTIterator.prototype.hasPrevious = function () {
+    return this.currentIndex > 0;
+  };
+  
+  // Definition for a binary tree node.
+  function TreeNode(val) {
+    this.val = val;
+    this.left = this.right = null;
+  }
+  
+  // Example usage:
+  const root = new TreeNode(7);
+  root.left = new TreeNode(3);
+  root.right = new TreeNode(15);
+  root.right.left = new TreeNode(9);
+  root.right.right = new TreeNode(20);
+  
+  const bstIterator = new BSTIterator(root);
+  
+  console.log("Next element:", bstIterator.next()); // Output: 3
+  console.log("Has next element:", bstIterator.hasNext()); // Output: true
+  
+  console.log("Previous element:", bstIterator.previous()); // Output: 3
+  console.log("Has previous element:", bstIterator.hasPrevious()); // Output: false
+  
+  console.log("Next element:", bstIterator.next()); // Output: 7
+  console.log("Has next element:", bstIterator.hasNext()); // Output: true
+  
+  console.log("Next element:", bstIterator.next()); // Output: 9
+  console.log("Has next element:", bstIterator.hasNext()); // Output: true
+  
+  console.log("Previous element:", bstIterator.previous()); // Output: 9
+  console.log("Has previous element:", bstIterator.hasPrevious()); // Output: true
+  
